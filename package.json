@@ -1,0 +1,34 @@
+{
+	"name": "@wdf/platform",
+	"version": "0.0.1",
+	"type": "module",
+	"license": "Custom",
+	"description": "WDF platform package",
+	"repository": "github:wdf-js/platform",
+	"engines": {
+		"workerd": "*"
+	},
+	"scripts": {
+		"build": "zx build.mjs"
+	},
+	"dependencies": {
+		"reflect-metadata": "^0.1.13",
+		"sprintf-js": "^1.1.2"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": ">=4.20230628.0",
+		"@types/sprintf-js": "^1.1.2",
+		"ts-patch": "^3.0.2",
+		"typescript": "^5.1.6",
+		"typescript-transform-paths": "^3.4.6",
+		"zx": "^7.2.3"
+	},
+	"installConfig": {
+		"pnp": true
+	},
+	"workspaces": [
+		".",
+		"example"
+	],
+	"packageManager": "yarn@3.6.1"
+}

@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"outDir": "dist",
+		"target": "esnext",
+		"lib": ["esnext"],
+		"types": ["@cloudflare/workers-types"],
+		"emitDeclarationOnly": false,
+		"declaration": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"allowJs": false,
+		"skipLibCheck": true,
+		"esModuleInterop": false,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["src/*"],
+		},
+		"plugins": [
+			{ "transform": "typescript-transform-paths" }, // .js
+			{ "transform": "typescript-transform-paths", "afterDeclarations": true }, // .d.ts
+		],
+	},
+	"include": ["src"],
+}

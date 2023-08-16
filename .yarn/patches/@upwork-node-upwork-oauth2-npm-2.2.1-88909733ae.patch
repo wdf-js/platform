@@ -1,0 +1,459 @@
+diff --git a/example/example.js b/example/example.js
+index dd4f4fdb4cf3e4a7d34cc46487ef807545886c8f..088cf87f0d9c32964599d8ac5c2a247fcd86929c 100644
+--- a/example/example.js
++++ b/example/example.js
+@@ -7,6 +7,7 @@
+  * @author      Maksym Novozhylov <mnovozhilov@upwork.com>
+  * @license     Upwork's API Terms of Use {@link https://developers.upwork.com/api-tos.html}
+  */
++const debug = require('../lib/debug2');
+ 
+ var config = {
+   'clientId' : 'xxxxxxxx',
+diff --git a/index.js b/index.js
+index 68a5c87274fd2a8e9cec64b162c5f38f0e25062b..47305fd108f05ee40528b2f6658cd59c17a6684d 100644
+--- a/index.js
++++ b/index.js
+@@ -1,2 +1 @@
+-require('pkginfo')(module, 'version');
+ module.exports = require('./lib/api').UpworkApi;
+diff --git a/lib/api.js b/lib/api.js
+index 011a2bed7e76e76df0f39eeebb3fad793dffcafc..5eaf93d9fa5298c26439b9ba14372e14dcf80eff 100644
+--- a/lib/api.js
++++ b/lib/api.js
+@@ -13,13 +13,9 @@
+  * @requires debug, config, client
+  */
+ 
+-debug = function (data, label) {
+-  var d = new Debug(process.env.UPWORK_API_DEBUG || false);
+-  d.log(data, label);
+-}
++const debug = require('./debug2');
+ 
+-var Debug  = require('./debug')
+-  , Config = require('./config')
++var Config = require('./config')
+   , Client = require('./client');
+ 
+ /**
+diff --git a/lib/client.js b/lib/client.js
+index 98344b2d4f24cd29e745a377347a8defcd955828..3f58ebdc3f266657de1d2235507a7878c00c8a66 100644
+--- a/lib/client.js
++++ b/lib/client.js
+@@ -12,6 +12,7 @@
+  * @module client
+  * @requires simple-oauth2
+  */
++const debug = require('./debug2');
+ 
+ debug('export client module');
+ 
+diff --git a/lib/debug2.js b/lib/debug2.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..22bfbaf6704054432be7024812665903375dd3ef
+--- /dev/null
++++ b/lib/debug2.js
+@@ -0,0 +1,6 @@
++const Debug  = require('./debug');
++
++module.exports = function (data, label) {
++  var d = new Debug(process.env.UPWORK_API_DEBUG || false);
++  d.log(data, label);
++};
+diff --git a/lib/routers/activities/engagement.js b/lib/routers/activities/engagement.js
+index e5731bc3b233e85b2c207b4d5b2e313882b17442..81d659c119794f2783e55f611f35c9aa46eaf017 100644
+--- a/lib/routers/activities/engagement.js
++++ b/lib/routers/activities/engagement.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Engagement
+diff --git a/lib/routers/activities/team.js b/lib/routers/activities/team.js
+index 93e1bbaab9491df6a8451f59c32d0d7b07e7aa33..21407cdbbfcf076dab56e34139fa91b33ad374c8 100644
+--- a/lib/routers/activities/team.js
++++ b/lib/routers/activities/team.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Team
+diff --git a/lib/routers/auth.js b/lib/routers/auth.js
+index 98f684ef52dbd2a084b4a38fb82f904fbb81244d..f7ba77d72d72f531ada1f2ba9aaf924e118d3c6d 100644
+--- a/lib/routers/auth.js
++++ b/lib/routers/auth.js
+@@ -7,6 +7,7 @@
+  * @author      Maksym Novozhylov <mnovozhilov@upwork.com>
+  * @license     Upwork's API Terms of Use {@link https://developers.upwork.com/api-tos.html}
+  */
++const debug = require('../../debug2');
+ 
+ /**
+  * @module routes.auth
+diff --git a/lib/routers/freelancers/profile.js b/lib/routers/freelancers/profile.js
+index d764432229c5841e6aa2277199a8ad852cf62779..2065fd6d7ce42e316b76ee0e2f4dba26dfdbfaec 100644
+--- a/lib/routers/freelancers/profile.js
++++ b/lib/routers/freelancers/profile.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Profile
+diff --git a/lib/routers/freelancers/search.js b/lib/routers/freelancers/search.js
+index 959eaa674f5b59e2b64b0664f03c9d694cc30bc1..166672858275619a6bc1041e8d2da7f55b80fcc4 100644
+--- a/lib/routers/freelancers/search.js
++++ b/lib/routers/freelancers/search.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Search
+diff --git a/lib/routers/graphql.js b/lib/routers/graphql.js
+index f8af9198b822e069dfec196e695ebe190f9633fc..908d5b3c034b30672995c6fe1bc54070b02d0c67 100644
+--- a/lib/routers/graphql.js
++++ b/lib/routers/graphql.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'graphql';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Graphql
+diff --git a/lib/routers/hr/clients/applications.js b/lib/routers/hr/clients/applications.js
+index 9017c6687b6d6dc635a5c8635960cece76439cc8..eddd2aca00d9fe9ab3449442326ef4d3d53abf19 100644
+--- a/lib/routers/hr/clients/applications.js
++++ b/lib/routers/hr/clients/applications.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../../debug2');
+ 
+ /**
+  * @class Applications
+diff --git a/lib/routers/hr/clients/offers.js b/lib/routers/hr/clients/offers.js
+index 379ec61c240db396da051685e20d467a3c775e8b..be1a2f8b713f280065d6390f8a994eae9231eb22 100644
+--- a/lib/routers/hr/clients/offers.js
++++ b/lib/routers/hr/clients/offers.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../../debug2');
+ 
+ /**
+  * @class Offers
+diff --git a/lib/routers/hr/contracts.js b/lib/routers/hr/contracts.js
+index aed9605250376d643966e3ff6d9726bd77d28c42..418136f8334396e4df73d13bff166977f664d480 100644
+--- a/lib/routers/hr/contracts.js
++++ b/lib/routers/hr/contracts.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Users
+diff --git a/lib/routers/hr/engagements.js b/lib/routers/hr/engagements.js
+index e85b6953c5f6ccdbefb1d1922488887e94f88c78..4f130683773dc4499dc0f04ccd85020c95f6d70c 100644
+--- a/lib/routers/hr/engagements.js
++++ b/lib/routers/hr/engagements.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Engagements
+diff --git a/lib/routers/hr/freelancers/applications.js b/lib/routers/hr/freelancers/applications.js
+index 7f97885cbcc953f089a722f269e216c5ee3e07af..3da382c9c49644991235e8847a4315faa3b64c72 100644
+--- a/lib/routers/hr/freelancers/applications.js
++++ b/lib/routers/hr/freelancers/applications.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../../debug2');
+ 
+ /**
+  * @class Applications
+diff --git a/lib/routers/hr/freelancers/offers.js b/lib/routers/hr/freelancers/offers.js
+index f300a160d5f997312a2fab95c3fe24779127c757..57a2039a5947d588e8d6af84d78406efcfab4532 100644
+--- a/lib/routers/hr/freelancers/offers.js
++++ b/lib/routers/hr/freelancers/offers.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../../debug2');
+ 
+ /**
+  * @class Offers
+diff --git a/lib/routers/hr/interviews.js b/lib/routers/hr/interviews.js
+index a271d82aea04f6b6ebda33affc00acff4e59b240..9f89c7e0d10bca794ed1c3730f5fa2a74385b3ee 100644
+--- a/lib/routers/hr/interviews.js
++++ b/lib/routers/hr/interviews.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Interviews
+diff --git a/lib/routers/hr/jobs.js b/lib/routers/hr/jobs.js
+index 1817138e7192fe00c3b6018687e26a930636f859..c45de60e466acf51c9192282bc3524e9a741d1c0 100644
+--- a/lib/routers/hr/jobs.js
++++ b/lib/routers/hr/jobs.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Jobs
+diff --git a/lib/routers/hr/milestones.js b/lib/routers/hr/milestones.js
+index d2dfc83106ad26cb5581cb4901d7e5b0c492334c..c2b7dfbf91e9aefe0d09924c1b1a6b14cadfd6b5 100644
+--- a/lib/routers/hr/milestones.js
++++ b/lib/routers/hr/milestones.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Interviews
+diff --git a/lib/routers/hr/roles.js b/lib/routers/hr/roles.js
+index 1812110fa7bd76ecd247fe98ddf4560a879b5314..591397d608948f62c860d4cca3e08440f25a4169 100644
+--- a/lib/routers/hr/roles.js
++++ b/lib/routers/hr/roles.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Roles
+diff --git a/lib/routers/hr/submissions.js b/lib/routers/hr/submissions.js
+index f89b3419bee01b0dfecb7c38a0f5ea8891a41ca6..df41faf7786abf3afbd76fa0d70f41184bdab189 100644
+--- a/lib/routers/hr/submissions.js
++++ b/lib/routers/hr/submissions.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Interviews
+diff --git a/lib/routers/jobs/profile.js b/lib/routers/jobs/profile.js
+index 9fd6dd4569fc8e55c3fa9879ffde32c508d9f816..1f1abb1b55777d3c29d8cb578293d6e23637e949 100644
+--- a/lib/routers/jobs/profile.js
++++ b/lib/routers/jobs/profile.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Profile
+diff --git a/lib/routers/jobs/search.js b/lib/routers/jobs/search.js
+index 1a620b013287280c3eab5bdf961b711a2041912d..ea3801c4076670996488ef8c9bdb134dd23ef03b 100644
+--- a/lib/routers/jobs/search.js
++++ b/lib/routers/jobs/search.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Search
+diff --git a/lib/routers/messages.js b/lib/routers/messages.js
+index be2eb5dbad80327383a1b5c34d3f44d4d1067aa6..96b44c79d927f2238f26aa231e23b1217e506e0b 100644
+--- a/lib/routers/messages.js
++++ b/lib/routers/messages.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../debug2');
+ 
+ /**
+  * Messages
+diff --git a/lib/routers/metadata.js b/lib/routers/metadata.js
+index 4f80c3004f8898fb02afb7828f334478136d5325..822c1f640ba66396c7847d7b00269be7cba55cfd 100644
+--- a/lib/routers/metadata.js
++++ b/lib/routers/metadata.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../debug2');
+ 
+ /**
+  * @class Metadata
+diff --git a/lib/routers/organization/companies.js b/lib/routers/organization/companies.js
+index 81a9fc129502bbb731b6e1169beca4290ef96ac2..77f76baab50d45159e81e162d6f5a10aef50b940 100644
+--- a/lib/routers/organization/companies.js
++++ b/lib/routers/organization/companies.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Companies
+diff --git a/lib/routers/organization/teams.js b/lib/routers/organization/teams.js
+index 87d4552e42a1f8edbbff72b51337270988296d35..2475ae7ff5b66fea5310cb264dfacf10442ea99b 100644
+--- a/lib/routers/organization/teams.js
++++ b/lib/routers/organization/teams.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Teams
+diff --git a/lib/routers/organization/users.js b/lib/routers/organization/users.js
+index e1c2eee4f197b427eb40c66b840e24e51e6365bd..b9d4e045e8ac37a679537e0a8dbd977bcfc099a3 100644
+--- a/lib/routers/organization/users.js
++++ b/lib/routers/organization/users.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Users
+diff --git a/lib/routers/payments.js b/lib/routers/payments.js
+index bc7532ba83e832d94e49e74992903e60cb77ce76..d854ac2031e04e99731468f18d0a9a48c79b0783 100644
+--- a/lib/routers/payments.js
++++ b/lib/routers/payments.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../debug2');
+ 
+ /**
+  * Custom Payments
+diff --git a/lib/routers/reports/finance/accounts.js b/lib/routers/reports/finance/accounts.js
+index 73a94415a8cddf40388b4756d78f7286d70a4724..29e5e439c3f31563e0612a813f05a1ca3bc6711d 100644
+--- a/lib/routers/reports/finance/accounts.js
++++ b/lib/routers/reports/finance/accounts.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'gds';
++const debug = require('../../../debug2');
+ 
+ /**
+  * @class Accounts
+diff --git a/lib/routers/reports/finance/billings.js b/lib/routers/reports/finance/billings.js
+index 176446ad842d39475016c507857e8e4f0db27e61..f679e7dc408bf2ff74a8b71c835e1430d9115f39 100644
+--- a/lib/routers/reports/finance/billings.js
++++ b/lib/routers/reports/finance/billings.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'gds';
++const debug = require('../../../debug2');
+ 
+ /**
+  * @class Billings
+diff --git a/lib/routers/reports/finance/earnings.js b/lib/routers/reports/finance/earnings.js
+index 9227c71f75fe06779e234a3cba6ce67b166ea0df..3b9258ce4613aba0b52560f403a99bb8fe5fc48c 100644
+--- a/lib/routers/reports/finance/earnings.js
++++ b/lib/routers/reports/finance/earnings.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'gds';
++const debug = require('../../../debug2');
+ 
+ /**
+  * @class Earnings
+diff --git a/lib/routers/reports/time.js b/lib/routers/reports/time.js
+index b5236e4655559e2153618d98d6da9bca21922384..b5b1c7d8b7c923102ace733177cf6114a39ea94c 100644
+--- a/lib/routers/reports/time.js
++++ b/lib/routers/reports/time.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'gds';
++const debug = require('../../debug2');
+ 
+ /**
+  * @class Time
+diff --git a/lib/routers/snapshot.js b/lib/routers/snapshot.js
+index 75a9623f8e609c9da130356668f6aefad0c49f06..365c7e0b6e8b33f4a24b864b435588ab6d03fc9c 100644
+--- a/lib/routers/snapshot.js
++++ b/lib/routers/snapshot.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../debug2');
+ 
+ /**
+  * Snapshot Info
+diff --git a/lib/routers/teams.js b/lib/routers/teams.js
+index 05e0bca307481c3302202163a8a9bd0c8fe53f6f..30e637c496c2a6848eaf510c40a156079b8e5a77 100644
+--- a/lib/routers/teams.js
++++ b/lib/routers/teams.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../debug2');
+ 
+ /**
+  * @class Teams
+diff --git a/lib/routers/workdays.js b/lib/routers/workdays.js
+index 42e9fc2c7ae16a6be903f22dde47983ae4c5a630..d70fc2c955ce5fe6ffbcc89f14349c7323419f6e 100644
+--- a/lib/routers/workdays.js
++++ b/lib/routers/workdays.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../debug2');
+ 
+ /**
+  * @class Workdays
+diff --git a/lib/routers/workdiary.js b/lib/routers/workdiary.js
+index b1cf306e0bda09dc26e05fdd8a0b4ea33e09379d..3f37d100448563b74d62ca9c57235435471ceb42 100644
+--- a/lib/routers/workdiary.js
++++ b/lib/routers/workdiary.js
+@@ -20,6 +20,7 @@
+  * @final
+  */
+ var entryPoint = 'api';
++const debug = require('../debug2');
+ 
+ /**
+  * @class Workdiary

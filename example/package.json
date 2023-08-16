@@ -1,0 +1,7 @@
+{
+	"name": "example",
+	"private": true,
+	"dependencies": {
+		"@wdf/platform": "workspace:*"
+	}
+}
